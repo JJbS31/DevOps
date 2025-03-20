@@ -1,30 +1,54 @@
 import random
 
 def saludo():
-    nombre = input("¿Cómo te llamas? ")
-    print(f"¡Hola, {nombre}! Bienvenido a este pequeño programa interactivo.")
+    """Solicita el nombre del usuario y lo saluda."""
+    nombre = input("¿Cómo te llamas? ").strip()
+    print(f"\n¡Hola, {nombre}! Bienvenido a este pequeño programa interactivo.")
 
 def menu():
-    print("\nMenú de opciones:")
-    print("1. Generar un número aleatorio")
-    print("2. Calcular la suma de dos números")
-    print("3. Salir")
-    opcion = input("Elige una opción (1/2/3): ")
-    return opcion
+    """Muestra el menú de opciones y valida la entrada del usuario."""
+    while True:
+        print("\nMenú de opciones:")
+        print("1. Generar un número aleatorio")
+        print("2. Calcular la suma de dos números")
+        print("3. Salir")
+        opcion = input("Elige una opción (1/2/3): ").strip()
+
+        if opcion in {"1", "2", "3"}:
+            return opcion
+        else:
+            print("Opción no válida, intenta de nuevo.")
 
 def numero_aleatorio():
-    num = random.randint(1, 100)
-    print(f"Tu número aleatorio es: {num}")
+    """Genera un número aleatorio dentro de un rango personalizado por el usuario."""
+    try:
+        min_rango = int(input("Ingrese el límite inferior: "))
+        max_rango = int(input("Ingrese el límite superior: "))
+
+        if min_rango >= max_rango:
+            print("El límite inferior debe ser menor que el superior.")
+        else:
+            num = random.randint(min_rango, max_rango)
+            print(f"Tu número aleatorio entre {min_rango} y {max_rango} es: {num}")
+    except ValueError:
+        print("Por favor, ingresa números enteros válidos.")
 
 def suma():
-    try:
-        num1 = float(input("Ingresa el primer número: "))
-        num2 = float(input("Ingresa el segundo número: "))
-        print(f"La suma de {num1} y {num2} es: {num1 + num2}")
-    except ValueError:
-        print("Por favor, ingresa valores numéricos válidos.")
+    """Solicita dos números al usuario y muestra la suma."""
+    def obtener_numero(mensaje):
+        """Solicita un número al usuario y maneja posibles errores."""
+        while True:
+            try:
+                return float(input(mensaje))
+            except ValueError:
+                print("Entrada no válida. Ingresa un número.")
+
+    num1 = obtener_numero("Ingresa el primer número: ")
+    num2 = obtener_numero("Ingresa el segundo número: ")
+    print(f"La suma de {num1} y {num2} es: {num1 + num2}")
 
 def main():
+    """Función principal del programa."""
     saludo()
     while True:
         opcion = menu()
@@ -35,8 +59,6 @@ def main():
         elif opcion == "3":
             print("¡Gracias por usar el programa! Hasta luego.")
             break
-        else:
-            print("Opción no válida, intenta de nuevo.")
 
 if __name__ == "__main__":
     main()
